@@ -38,6 +38,19 @@ function selectionner_recherche(e)
 	var e_text = e.parentElement.firstChild.innerHTML;
 	$('#zone_saisie').val(e_text);
 	recherche_courante = e_text ;
+	var cookie = $.cookie(e_text);
+	if (cookie!=null){
+			$('#resultats').empty(); // PB : dans les cookies de google, ceux d'amazon
+		recherche_courante_news = $.parseJSON(cookie);
+		for (var i=0; i<recherche_courante_news.length; i++){
+			$('#resultats').append(decodeEntities(
+				'<p class="titre_result"><a class="titre_news" href="'+recherche_courante_news[i].url
+				+'" target="_blank">'+recherche_courante_news[i].titre
+				+'</a><span class="date_news">'+format(recherche_courante_news[i].date)
+				+'</span><span class="action_news" onclick="supprime_news(this)"><img src="disk15.jpg"/></span></p>')
+			)
+		}
+	}
 }
 
 
@@ -62,6 +75,7 @@ function recherche_nouvelles()
 	$('#resultats').empty();
 	$('#wait').css("display","block") ;
 	var data = $('#zone_saisie').val();
+	recherche_courante = data;
 	$.ajax({
 		url : 'search.php?data='+data,
 		type : 'GET',
@@ -76,12 +90,12 @@ function recherche_nouvelles()
 function maj_resultats(res)
 {
 	$('#wait').css("display","none");
-	recherche_courante_news = res; // JQuery parse automatiquement le JSON renvoyé par le serveur s'il est valide
-	for(var i=0; i<recherche_courante_news.length; i++){
+	var resJSON = res; // JQuery parse automatiquement le JSON renvoyé par le serveur s'il est valide
+	for(var i=0; i<resJSON.length; i++){
 		$('#resultats').append(decodeEntities(
-			'<p class="titre_result"><a class="titre_news" href="'+recherche_courante_news[i].url
-			+'" target="_blank">'+recherche_courante_news[i].titre
-			+'</a><span class="date_news">'+format(recherche_courante_news[i].date)
+			'<p class="titre_result"><a class="titre_news" href="'+resJSON[i].url
+			+'" target="_blank">'+resJSON[i].titre
+			+'</a><span class="date_news">'+format(resJSON[i].date)
 			+'</span><span class="action_news" onclick="sauve_news(this)"><img src="horloge15.jpg"/></span></p>')
 		)
 	}
@@ -90,11 +104,34 @@ function maj_resultats(res)
 
 function sauve_news(e)
 {
-
+	e.querySelector("img").setAttribute("src","disk15.jpg"); // querySelector() retourne le premier élement qui correspond au selecteur CSS
+	e.setAttribute("onclick","supprime_news(this)");
+	var e_html = e.parentElement;
+	var news = new Object() ;
+	news.titre = e_html.getElementsByClassName("titre_news")[0].innerHTML;
+	news.date = e_html.getElementsByClassName("date_news")[0].innerHTML;
+	news.url = e_html.getElementsByClassName("titre_news")[0].getAttribute("href");
+	if (indexOf(news, recherche_courante_news)==-1){
+		recherche_courante_news.push(news);
+		var e_textJson = JSON.stringify(recherche_courante_news);
+		$.cookie(recherche_courante,e_textJson, {expires : 1000});
+	}
 }
 
 
 function supprime_news(e)
 {
-
+	e.querySelector("img").setAttribute("src","horloge15.jpg"); // querySelector() retourne le premier élement qui correspond au selecteur CSS
+	e.setAttribute("onclick","sauve_news(this)");
+	var e_html = e.parentElement;
+	var news = new Object() ;
+	news.titre = e_html.getElementsByClassName("titre_news")[0].innerHTML;
+	news.date = e_html.getElementsByClassName("date_news")[0].innerHTML;
+	news.url = e_html.getElementsByClassName("titre_news")[0].getAttribute("href");
+	var index = indexOf(news, recherche_courante_news);
+	if (index==-1){
+		recherche_courante_news.splice(index,1);
+		var e_textJson = JSON.stringify(recherche_courante_news);
+		$.cookie(recherche_courante,e_textJson, {expires : 1000});
+	}
 }
