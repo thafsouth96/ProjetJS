@@ -80,6 +80,7 @@ function init()
 			source : recherche_history
 		});
 	}
+	$('.icone-disk').tooltip();
 }
 
 
