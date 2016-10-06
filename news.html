@@ -9,14 +9,14 @@
 	<h1 class="nom"> <img id="banniere" src="news_top.jpeg"/> </h1>
 	<div id="recherches">
 		<h3 class="titre"> recherches stockées</h3>
-		<div id="recherches-stockees">	
+		<div id="recherches-stockees">
 		</div>
 		<h3 class="titre">nouvelle recherche</h3>
 		<div id="nouvelle-recherche">
 			<input type="text" name="zone_saisie" id="zone_saisie"/>
 			<img class="icone-disk" src="disk30.jpg" onclick="ajouter_recherche()" />
 			<BR/>
-			<input type="button" value="OK" onclick="recherche_nouvelles()"/>	
+			<input type="button" value="OK" onclick="recherche_nouvelles()"/>
 		</div>
 	</div>
 	<div id="zone-centrale">
@@ -25,8 +25,15 @@
 			<div id="wait"></div>
 			<div id="resultats"></div>
 		</div>
-	<script src="jquery-2.1.3.js"></script>
+		<script src="jquery-2.1.3.js"></script>
     <script src="jquery.cookie.js"></script>
+		
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+		<link rel="stylesheet" href="/resources/demos/style.css">
+
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
 	<script src="util.js"></script>
 	<script src="news.js"></script>
 </body>
