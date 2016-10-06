@@ -54,7 +54,7 @@ function selectionner_recherche(e)
 				'<p class="titre_result"><a class="titre_news" href="'+recherche_courante_news[i].url
 				+'" target="_blank">'+recherche_courante_news[i].titre
 				+'</a><span class="date_news">'+recherche_courante_news[i].date
-				+'</span><span class="action_news" onclick="supprime_news(this)"><img src="disk15.jpg"/></span></p>')
+				+'</span><span class="action_news" onclick="supprime_news(this)"><img id ="icon_save" src="disk15.jpg"/></span></p>')
 			)
 		}
 	}
@@ -80,7 +80,11 @@ function init()
 			source : recherche_history
 		});
 	}
-	$('.icone-disk').tooltip();
+
+	$(".icone-disk").tooltipster(); // Erreur : tooltipster is not a fonction mais elle fonctionne 
+	$("#zone_saisie").tooltipster();
+	$("#icon_horloge").tooltipster();
+	$("#icon_save").tooltipster();
 }
 
 
@@ -129,9 +133,9 @@ function maj_resultats(res)
 				j++;
 			}
 			if (present){
-				text_html+='</span><span class="action_news" onclick="supprime_news(this)"><img src="disk15.jpg"/></span></p>';
+				text_html+='</span><span class="action_news" onclick="supprime_news(this)"><img id ="icon_save" title="Cliquez pour supprimer le résultat"src="disk15.jpg"/></span></p>';
 			}
-			else text_html+='</span><span class="action_news" onclick="sauve_news(this)"><img src="horloge15.jpg"/></span></p>';
+			else text_html+='</span><span class="action_news" onclick="sauve_news(this)"><img id ="icon_horloge" src="horloge15.jpg" title ="Enregister ce résultats"/></span></p>';
 			$('#resultats').append(text_html);
 	}
 }
