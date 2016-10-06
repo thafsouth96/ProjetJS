@@ -2,26 +2,28 @@ body
 {
 	font-family: "Verdana", Georgia, Serif;
 	margin:auto;
-	background-image: url(search30.png);
+	/*background-image: url(search30.png);*/
 	background-repeat : no-repeat;
 	background-size: cover;
 	background-position: center center;
 	height:100%;
+	background-color:  #e6e6ff;
 
-	
+
 }
 
 .titre-recherche
 {
 	width:100%;
-	margin:0px;
+	margin:5px;
 }
 
 .titre-recherche:hover
 {
-	background-color:grey;
+	background-color:#8080ff;
 	color:white;
 }
+
 
 .titre-recherche label
 {
@@ -29,8 +31,14 @@ body
 	margin:0px;
 	width:90%;
 	font-size:12px;
+	font-family: Arial, sans-serif;
 }
 
+.titre-recherche label:hover{
+
+		font-size:16px;
+		font-weight: bold;
+}
 
 
 .icone-croix
@@ -57,8 +65,9 @@ body
 	width:26%;
 	height:500px;
 	padding:1px;
-	border: 1px solid black;
+	/*border: 1px solid #103F49;*/
 	border-radius: 10px;
+	background-color:#ccccff;
 
 }
 
@@ -76,7 +85,8 @@ body
 {
 	display:inline-block;
 	width:80%;
-	font-size:10px;
+	font-size:14px;
+	font-size: Arial, sans-serif;
 }
 
 .date_news
@@ -92,7 +102,10 @@ body
 	width:5%;
 	font-size:10px;
 }
-
+.action_news img {
+	width: 20px;
+	height: 20px;
+}
 .titre_result
 {
 	display:inline-block;
@@ -103,18 +116,20 @@ body
 
 .titre_result:hover
 {
-	background-color:grey;
+	background-color:#8080ff;
 	color:white;
+
 }
 
 .titre
 {
-	background-color:black;
+	background-color:  #4d4dff;
 	color:white;
-	font-size:12px;
-	border-radius: 10px;
+	font-size:16px;
+	/*border-radius: 5px;*/
 	text-align:center;
 	padding:5px;
+	font-family: Arial, sans-serif;
 }
 
 #zone-centrale
@@ -122,10 +137,11 @@ body
 	float:right;
 	height:500px;
 	margin-right:1%;
-	border: 1px solid black;
+	/*border: 1px solid #103F49;*/
 	width:70%;
 	padding:1px;
 	border-radius: 10px;
+  background-color: #ccccff;
 }
 
 #resultats
@@ -158,5 +174,6 @@ input[type="text"]
 #banniere
 {
 	width:99%;
+	opacity : 0.6;
 	height:200px;
 }
