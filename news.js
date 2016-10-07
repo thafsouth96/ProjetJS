@@ -83,6 +83,7 @@ function init()
 			source : recherche_history
 		});
 	}
+
 	//OnClick sur Entrer ==> Lancer la recherche
 	$("#zone_saisie").keypress(function(event){
 		var keycode = (event.keycode ? event.keycode : event.which);
@@ -92,10 +93,10 @@ function init()
 
 	})
 
-	$(".icone-disk").tooltipster(); // Erreur : tooltipster is not a fonction mais elle fonctionne
-	$("#zone_saisie").tooltipster();
-	$("#icon_horloge").tooltipster();
-	$("#icon_save").tooltipster();
+	$(".icone-disk").tooltip(); // Erreur : tooltipster is not a fonction mais elle fonctionne
+	$("#zone_saisie").tooltip();
+	$("#icon_horloge").tooltip();
+	$("#icon_save").tooltip();
 
 }
 
@@ -106,10 +107,14 @@ function recherche_nouvelles()
 	$('#wait').css("display","block") ;
 	var data = $('#zone_saisie').val();
 	recherche_courante = data;
-	if(indexOf(recherche_history,data) == -1){
+	//console.log(recherche_history);
+	//console.log(recherche_history.indexOf(data));
+	if(recherche_history.indexOf(data) == -1){
+
 		recherche_history.push(data); //On ajoute la recherche à son historique
+		$.cookie("recherche_history",JSON.stringify(recherche_history), {expires : 1000});
+
 	}
-	$.cookie("recherche_history",JSON.stringify(recherche_history), {expires : 1000});
 	var cookie = $.cookie(data);
 	recherche_courante_news=[];
 	if(cookie != null){
@@ -137,7 +142,7 @@ function maj_resultats(res)
 			var present = false;
 			var j=0;
 			while (j<recherche_courante_news.length && !present){
-				console.log(recherche_courante_news[j].date + " = " + resJSON[i].date);
+				//console.log(recherche_courante_news[j].date + " = " + resJSON[i].date);
 				if (recherche_courante_news[j].titre==resJSON[i].titre && recherche_courante_news[j].date==format(resJSON[i].date))	{
 
 					present = true;
@@ -164,6 +169,7 @@ function sauve_news(e)
 	news.url = e_html.getElementsByClassName("titre_news")[0].getAttribute("href");
 	if (indexOf(news, recherche_courante_news)==-1){
 		recherche_courante_news.push(news);
+		console.log(recherche_courante_news);
 		var e_textJson = JSON.stringify(recherche_courante_news);
 		$.cookie(recherche_courante,e_textJson, {expires : 1000});
 	}
