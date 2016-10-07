@@ -73,6 +73,9 @@ function init()
 			$('#recherches-stockees p:last-child').children().last().attr("onclick","supprimer_recherche(this)");
 		}
 	}
+
+
+
 	var cookie_history = $.cookie("recherche_history");
 	if(cookie_history!=null){
 		recherche_history = $.parseJSON(cookie_history);
@@ -80,11 +83,20 @@ function init()
 			source : recherche_history
 		});
 	}
+	//OnClick sur Entrer ==> Lancer la recherche
+	$("#zone_saisie").keypress(function(event){
+		var keycode = (event.keycode ? event.keycode : event.which);
+		if(keycode== '13'){
+			recherche_nouvelles();
+		}
 
-	$(".icone-disk").tooltipster(); // Erreur : tooltipster is not a fonction mais elle fonctionne 
+	})
+
+	$(".icone-disk").tooltipster(); // Erreur : tooltipster is not a fonction mais elle fonctionne
 	$("#zone_saisie").tooltipster();
 	$("#icon_horloge").tooltipster();
 	$("#icon_save").tooltipster();
+
 }
 
 
