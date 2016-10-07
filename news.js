@@ -152,7 +152,7 @@ function maj_resultats(res)
 			if (present){
 				text_html+='</span><span class="action_news" onclick="supprime_news(this)"><img id ="icon_save" title="Cliquez pour supprimer le résultat"src="disk15.jpg"/></span></p>';
 			}
-			else text_html+='</span><span class="action_news" onclick="sauve_news(this)"><img id ="icon_horloge" src="horloge15.jpg" title ="Enregister ce résultats"/></span></p>';
+			else text_html+='</span><span class="action_news" onclick="sauve_news(this)"><img id ="icon_horloge" src="horloge15.jpg" title ="Enregister ce résultat"/></span></p>';
 			$('#resultats').append(text_html);
 	}
 }
@@ -167,6 +167,7 @@ function sauve_news(e)
 	news.titre = e_html.getElementsByClassName("titre_news")[0].innerHTML;
 	news.date = e_html.getElementsByClassName("date_news")[0].innerHTML;
 	news.url = e_html.getElementsByClassName("titre_news")[0].getAttribute("href");
+	//
 	if (indexOf(news, recherche_courante_news)==-1){
 		recherche_courante_news.push(news);
 		console.log(recherche_courante_news);
