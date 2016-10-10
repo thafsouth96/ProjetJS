@@ -16,39 +16,42 @@ function ajouter_recherche()
 
 
 	if(recherches.indexOf(e_text) == -1){
-		recherches.push(e_text);
+		recherches.push(e_text); // On ajoute la recherche dans le tableau de recherches stockées
+		// On ajoute une balise html correspondant à la nouvelle recherche à stocker dans la div associée
 		$('#recherches-stockees').append('<p class= "titre-recherche"><label>'+e_text+'</label><img src="croix30.jpg" class ="icone-croix"/></p>');
+		// On set les attributs "onclick" du label et de l'image croix30.jpg
 		$('#recherches-stockees').children().last().children().first().attr("onclick","selectionner_recherche(this)");
-		//alert($('#recherches-stockees').children().last().children().last().attr("src")) ;
 		$('#recherches-stockees p:last-child').children().last().attr("onclick","supprimer_recherche(this)");
-		var e_textJson = JSON.stringify(recherches);
-		$.cookie("recherches",e_textJson, {expires : 1000});
+		var e_textJson = JSON.stringify(recherches); // On convertit le tableau en objet JSON
+		$.cookie("recherches",e_textJson, {expires : 1000}); // On actualise le cookie
 	}
 
 }
 
+// Au clic sur l'icon croix30.jpg
 function supprimer_recherche(e)
 {
-	var e_text = e.parentElement.firstChild.innerHTML;
-	e.parentElement.remove();
-	recherches.splice(recherches.indexOf(e_text),1);
-	var e_textJson = JSON.stringify(recherches);
-	$.cookie("recherches",e_textJson, {expires : 1000});
+	var e_text = e.parentElement.firstChild.innerHTML; // on get le texte de la recherche stockée
+	e.parentElement.remove(); // on supprime la balise <p> associée à la recherche stockée
+	recherches.splice(recherches.indexOf(e_text),1); // on supprime la recherche stockée du tableau
+	var e_textJson = JSON.stringify(recherches); // On convertit le nouveau tableau de recherches stockées (sans la recherche que l'on vient de supprimer)
+	$.cookie("recherches",e_textJson, {expires : 1000}); // On actualise le cookie
 }
 
 
 function selectionner_recherche(e)
 {
-	var e_text = e.parentElement.firstChild.innerHTML;
-	$('#zone_saisie').val(e_text);
-	recherche_courante = e_text ;
+	var e_text = e.parentElement.firstChild.innerHTML; // on get le texte de la recherche stockée
+	$('#zone_saisie').val(e_text); // On remplace la valeur de la zone de saisie par le texte de la recherche
+	recherche_courante = e_text ; // on actualise la recherche courante
 	var cookie = $.cookie(e_text);
-	$('#resultats').empty();
-	recherche_courante_news=[];
+	$('#resultats').empty(); // On vide la div de résultats
+	recherche_courante_news=[]; // On vide le tableau de resultats enregistrés
 	if (cookie!=null){
 
-		recherche_courante_news = $.parseJSON(cookie);
+		recherche_courante_news = $.parseJSON(cookie); // On réinitialise le tableau de résultats avec le cookie des resultats enregistrés
 
+		// On affiche les résultats enregistrés
 		for (var i=0; i<recherche_courante_news.length; i++){
 			$('#resultats').append(decodeEntities(
 				'<p class="titre_result"><a class="titre_news" href="'+recherche_courante_news[i].url
@@ -74,8 +77,6 @@ function init()
 		}
 	}
 
-
-
 	var cookie_history = $.cookie("recherche_history");
 	if(cookie_history!=null){
 		recherche_history = $.parseJSON(cookie_history);
@@ -93,7 +94,7 @@ function init()
 
 	})
 
-	$(".icone-disk").tooltip(); // Erreur : tooltipster is not a fonction mais elle fonctionne
+	$(".icone-disk").tooltip();
 	$("#zone_saisie").tooltip();
 	$("#icon_horloge").tooltip();
 	$("#icon_save").tooltip();
@@ -142,7 +143,6 @@ function maj_resultats(res)
 			var present = false;
 			var j=0;
 			while (j<recherche_courante_news.length && !present){
-				//console.log(recherche_courante_news[j].date + " = " + resJSON[i].date);
 				if (recherche_courante_news[j].titre==resJSON[i].titre && recherche_courante_news[j].date==format(resJSON[i].date))	{
 
 					present = true;
